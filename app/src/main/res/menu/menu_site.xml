@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/site_option_show_on_map"
+            android:title="@string/afficherSurLaCarte"
+    />
+    <item
+            android:id="@+id/site_option_delete"
+            android:title="@string/supprimer"
+        />
+</menu>

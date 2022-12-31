@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.AddSiteActivity">
+
+<com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/barLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+</com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+            android:layout_below="@id/barLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp"
+
+            android:gravity="center">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:fontFamily="@font/openregular"
+                    android:text="@string/lat"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:id="@+id/txt_lat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:fontFamily="@font/openregular"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:fontFamily="@font/openregular"
+                    android:text="@string/lng"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:id="@+id/txt_lng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:padding="10dp"
+                    android:fontFamily="@font/openregular"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+        </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintSiteNom"
+                app:boxBackgroundColor="@color/white_greyish"
+        >
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+
+                    android:id="@+id/edit_txt_nom"
+                    android:layout_height="80dp"
+                    android:inputType="text"
+            />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hinttZipCode"
+                app:boxBackgroundColor="@color/white_greyish"
+        >
+            <EditText
+                    android:id="@+id/edit_txt_codepostal"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_margin="10dp"
+                    android:inputType="number"
+            />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/resume"
+                app:boxBackgroundColor="@color/white_greyish"
+        >
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+
+                    android:layout_height="120dp"
+                    android:id="@+id/edit_txt_resume"
+                    android:inputType="textMultiLine"
+            />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="20dp"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:paddingTop="10dp"
+                      android:gravity="left"
+                      android:text="@string/choixCategorie"
+
+            />
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+            <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:id="@+id/cat_spinner"/>
+
+            <Button
+                    android:id="@+id/ajouterCategorie"
+                    android:padding="10dp"
+                    android:text="@string/ajouterCategorie"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="8dp"
+                    android:shadowRadius="0"
+                    android:backgroundTint="@color/white_greyish"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+
+                android:layout_gravity="right">
+            <Button
+                    android:id="@+id/saveBtn"
+                    android:padding="10dp"
+                    android:enabled="false"
+                    android:text="Enregistrer"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+            />
+
+            <Button
+                    android:id="@+id/cancelBtn"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:backgroundTint="@color/orange"
+                    android:text="Annuler"
+            />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
+</ScrollView>

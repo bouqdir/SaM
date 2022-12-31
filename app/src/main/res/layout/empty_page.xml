@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="360dp"
+              android:layout_height="600dp"
+              android:background="@color/white_greyish"
+              android:padding="5dp"
+              android:layout_gravity="center">
+    <TextView
+            android:id="@+id/txtclose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textColor="@color/colorPrimary"
+            android:text="X"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:gravity="center"
+            />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:padding="30dp"
+        >
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/unknown"
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_marginBottom="30dp"
+
+            android:text="@string/LocationNotSaved"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/exo_medium"
+            android:textSize="18dp"
+            />
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <Button
+                    android:id="@+id/button_add_site"
+                    android:text="@string/addLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@font/openregular"
+                    android:backgroundTint="@color/colorAccent1"
+                    android:textColor="#FFFFFF"
+                    android:textAllCaps="true"/>
+
+            <Button android:id="@+id/btn_go"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:text="@string/partirMaintement"
+                    android:textColor="#FFFFFF"
+                    android:textAllCaps="true"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@font/openregular"
+            />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

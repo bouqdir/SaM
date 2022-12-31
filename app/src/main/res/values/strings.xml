@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">SaM</string>
+    <string name="title_activity_carte">CarteActivity</string>
+    <string name="title_activity_sites_list">SitesListActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="SiteDetails">Détails du site</string>
+    <string name="LocationNotSaved">Oups.. cet endroit ne fait pas partie de votre liste</string>
+    <string name="addLocation">Ajouter la sélection à la liste des sites</string>
+    <string name="nouveauSite">Nouveau site</string>
+    <string name="nouvelleCategorie">Nouvelle catégorie</string>
+    <string name="hintSiteNom">Nom du site</string>
+    <string name="title_activity_add_site">AddSiteActivity</string>
+    <string name="google_maps_api">AIzaSyCxOpTV1fSWHBXDQ34fSB8JNh96xLl2l3M</string>
+    <string name="radius_hint">Rayon en mètre</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="list_sites">Liste des sites</string>
+    <string name="suppressionMessage">Voulez vous supprimer ce site déffinitivement ?</string>
+    <string name="confirmDelete">Confirmer la suppresssion</string>
+    <string name="cancel">Annuler</string>
+    <string name="resume">Description du site</string>
+    <string name="hinttZipCode">Code postal</string>
+    <string name="lat">Latitude :</string>
+    <string name="lng">Longitude :</string>
+    <string name="title_activity_tabbes_lists">TabbesListsActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nom_categorie">Ex:( Café, Cinéma, Shopping...)</string>
+    <string name="categorie">Catégorie : </string>
+    <string name="nomDeCategorie">Donnez un nom à votre catégorie :</string>
+    <string name="catSuppressionMessage">Voulez vous supprimer cette catégorie déffinitivement ?</string>
+    <string name="warningSupression">la suppression d\'une catégorie entrainera la suppression de tous les
+        sites associés !
+    </string>
+    <string name="choixCategorie">Choisissez une catégorie :</string>
+    <string name="ajouterCategorie">Ajouter une catégorie</string>
+    <string name="permission">Demande de permissions</string>
+    <string name="permissionText">Cette application doit Utiliser les données de localisation. Autorisez-vous l\'accès à
+        la localisation de votre appareil ?
+    </string>
+    <string name="grantPermission">Autoriser et continuer</string>
+    <string name="editAvatar">Appuyer pour personnaliser l\'icône de votre catégorie</string>
+    <string name="afficherSurLaCarte">Voir sur la carte</string>
+    <string name="tabbedListTitle">Sites et catégories</string>
+    <string name="partirMaintement">Partir maintement</string>
+    <string name="aboutUs">Sortir à Metz : SaM est une application dédiée à toute personne amoureuse de la ville de Metz
+        et souhaite garder ses sites favoris sauvegardés à sa propre manière
+    </string>
+    <string name="AproposDeNous">A propos de SaM</string>
+</resources>

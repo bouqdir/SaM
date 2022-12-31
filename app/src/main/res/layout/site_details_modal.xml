@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="360dp"
+              android:layout_height="wrap_content"
+              android:paddingBottom="30dp"
+              android:background="@drawable/border"
+              android:layout_gravity="center">
+    <TextView
+            android:id="@+id/txtclose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textColor="@color/colorPrimary"
+            android:text="x"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:gravity="center"
+    />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/SiteDetails"
+            android:textColor="@color/orange"
+            android:fontFamily="@font/exo_medium"
+            android:textSize="18dp"
+            android:layout_marginBottom="40dp"
+    />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:gravity="right">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/categorie"
+                android:textColor="@color/black"
+                android:fontFamily="@font/exo_regular"
+                android:paddingTop="10dp"
+               />
+
+        <TextView
+                android:id="@+id/categorie_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:fontFamily="@font/exo_regular"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"/>
+
+        <ImageView
+                tools:srcCompat="@tools:sample/avatars"
+                android:id="@+id/categorie_avatar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="end"
+                android:gravity="right"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:padding="30dp"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:id="@+id/site_nom"
+                android:fontFamily="@font/exo_regular"
+                android:layout_marginBottom="10dp"
+        />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/site_resume"/>
+    </LinearLayout>
+
+    <Button android:id="@+id/btn_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="true"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/partirMaintement"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/openregular"
+    />
+
+</LinearLayout>

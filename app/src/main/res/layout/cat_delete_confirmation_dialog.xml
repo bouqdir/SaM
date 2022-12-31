@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="350dp"
+              android:layout_height="300dp"
+              android:background="@drawable/border"
+              android:padding="15dp"
+              android:layout_margin="30dp"
+              android:layout_gravity="center">
+    <TextView
+            android:id="@+id/txtclose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textColor="@color/colorAccent"
+            android:text="x"
+            android:layout_margin="0dp"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:gravity="center"
+    />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="left"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="2dp">
+
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:padding="10dp"
+                   android:src="@drawable/ic_baseline_warning_24"
+
+        />
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/openregular"
+                android:text="@string/warningSupression"
+                android:textColor="@color/orange"
+                android:textSize="13sp"
+                android:padding="10dp"
+                android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:fontFamily="@font/openregular"
+            android:text="@string/catSuppressionMessage"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:paddingTop="0dp">
+
+
+            <Button
+                    android:id="@+id/confirmDelete"
+                    android:text="@string/supprimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/openregular"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColor="#FFFFFF"
+                    android:textAllCaps="true"/>
+            <Button
+                    android:id="@+id/cancelDelete"
+                    android:text="@string/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@font/openregular"
+                    android:backgroundTint="@color/orange"
+                    android:textColor="#FFFFFF"
+                    android:textAllCaps="true"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

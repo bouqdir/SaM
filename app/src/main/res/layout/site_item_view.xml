@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:background="@drawable/rowborder">
+
+    <TextView
+            android:text="nom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:fontFamily="@font/openregular"
+            android:id="@+id/site_nom"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/site_nom"
+            android:textColor="@color/black"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/exo"
+            android:id="@+id/site_resume"/>
+
+</RelativeLayout>

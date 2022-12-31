@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="300dp"
+              android:layout_height="200dp"
+              android:background="@drawable/border"
+              android:padding="5dp"
+              android:layout_margin="20dp"
+              android:layout_marginRight="40dp"
+              android:layout_gravity="top">
+    <TextView
+            android:id="@+id/txtclose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textColor="@color/colorAccent"
+            android:text="x"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:gravity="center"
+    />
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:fontFamily="@font/openregular"
+                android:text="@string/suppressionMessage"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_marginBottom="30dp"
+                android:textStyle="bold" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingTop="0dp">
+
+            <Button
+                    android:id="@+id/confirmDelete"
+                    android:text="@string/supprimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/openregular"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColor="#FFFFFF"
+                    android:textAllCaps="true"/>
+            <Button
+                    android:id="@+id/cancelDelete"
+                    android:text="@string/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@font/openregular"
+                    android:backgroundTint="@color/orange"
+                    android:textColor="#FFFFFF"
+                    android:textAllCaps="true"/>
+    </LinearLayout>
+
+
+</LinearLayout>

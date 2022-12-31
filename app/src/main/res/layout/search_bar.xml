@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/border"
+              android:layout_gravity="top"
+              android:orientation="vertical">
+    <TextView
+            android:id="@+id/txtclose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="0dp"
+            android:textColor="@color/colorPrimary"
+            android:text="x"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:gravity="center"
+    />
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="284dp"
+            android:padding="20dp"
+            android:layout_margin="30dp"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:boxBackgroundColor="@color/white_greyish"
+        >
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/radius_hint"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/edt_txt_radius"
+                    android:minHeight="48dp"/>
+
+            />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:id="@+id/spinner_categorie"/>
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/yellow"
+                android:text="Lancer la recherche"
+                android:padding="10dp"
+                android:id="@+id/btn_apply_filter"
+        />
+
+    </LinearLayout>
+
+
+</LinearLayout>
