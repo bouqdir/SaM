@@ -22,6 +22,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 public class AddCategorieActivity extends AppCompatActivity {
     EditText edit_txt_nom;
     Button  save_btn, cancel_btn;
+    ImageView avatar_cat;
     AddCategorieButtonListener addCategorieButtonListener;
 
     @Override
@@ -38,11 +39,23 @@ public class AddCategorieActivity extends AppCompatActivity {
             finish();
         });
 
-        addCategorieButtonListener = new AddCategorieButtonListener(this);
-
         edit_txt_nom=findViewById(R.id.edit_txt_cat_nom);
         save_btn=findViewById(R.id.saveBtn);
         cancel_btn=findViewById(R.id.cancelBtn);
+        avatar_cat=findViewById(R.id.cat_imageView);
+
+
+        Intent intent = getIntent();
+        if(intent.hasExtra("id") && intent.hasExtra("name") &&intent.hasExtra("avatar")){
+        edit_txt_nom.setText(intent.getStringExtra("name"));
+        /*
+        avatar_cat.setImageResource(
+            getResources().getIdentifier(intent.getStringExtra("avatar"), "drawable", getPackageName()));
+
+         */
+        }
+
+        addCategorieButtonListener = new AddCategorieButtonListener(this);
 
         // Disable save button if the name is not provided
         edit_txt_nom.addTextChangedListener(new TextWatcher() {
@@ -57,7 +70,7 @@ public class AddCategorieActivity extends AppCompatActivity {
             }
 
             public void afterTextChanged(Editable s) {
-                if(!s.equals("")){
+                if(!s.toString().equals("") && s.toString()!=null){
                     save_btn.setEnabled(true);
                 }else{
                     save_btn.setEnabled(false);

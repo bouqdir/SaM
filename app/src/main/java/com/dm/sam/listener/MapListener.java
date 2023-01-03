@@ -94,8 +94,7 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
 
     @Override
     public boolean onMyLocationButtonClick() {
-        mMap.clear();
-        activity.getLocation(binding.getRoot());
+        //activity.getLocation(binding.getRoot());
         activity.getDisplayedSites( activity.getLastSelectedRadius(), activity.getLastSelectedCategorie(),activity.getcurrentPosition());
         return false;
     }
@@ -107,7 +106,8 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.about_us);
 
-        TextView close = dialog.findViewById(R.id.txtclose);
+        TextView close;
+        close= dialog.findViewById(R.id.txtclose);
         close.setOnClickListener(l->dialog.dismiss());
         dialog.show();
     }

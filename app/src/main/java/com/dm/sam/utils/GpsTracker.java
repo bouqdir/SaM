@@ -21,19 +21,18 @@ import android.provider.Settings;
 
 import android.util.Log;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import com.dm.sam.activity.CarteActivity;
+import com.google.android.gms.maps.model.LatLng;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 public class GpsTracker extends Service implements LocationListener {
     private final Context mContext;
+    private CarteActivity activity;
 
-    // flags for GPS status
-    boolean isGPSEnabled = false;
     boolean canGetLocation = false;
-
-    // flag for network status
-    boolean isNetworkEnabled = false;
 
     Location location; // location
     double latitude; // latitude
@@ -47,92 +46,48 @@ public class GpsTracker extends Service implements LocationListener {
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
-
-    public GpsTracker(Context context) {
+    public GpsTracker(Context context, CarteActivity activity) {
         this.mContext = context;
+        this.activity=activity;
         getLocation();
     }
 
-    //Method to get the location using GPS or network.
+    //Method to get the location using GPS
     @SuppressLint("MissingPermission")
     public Location getLocation() {
-        try {
+        if (locationManager == null)
             locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
-            // getting GPS status
-            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            // getting network status
-            isNetworkEnabled = locationManager
-                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if (!isGPSEnabled && !isNetworkEnabled) {
-                // no network provider is enabled
-            } else {
-                this.canGetLocation = true;
-                // First get location from Network Provider
-                if (isNetworkEnabled) {
-                    //check the network permission
-                    if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions((Activity) mContext, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
-                    }
-                    locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
-                    if (locationManager != null) {
-                        location = locationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-                        if (location != null) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                        }
-                    }
-                }
-
-                if (isGPSEnabled) {
-                    if (location == null) {
-                        //check the network permission
-                        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions((Activity) mContext, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
-                        }
-                        locationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
-                        Log.d("GPS Enabled", "GPS Enabled");
-                        if (locationManager != null) {
-                            location = locationManager
-                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                            if (location != null) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                            }
-                        }
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            this.canGetLocation = true;
+            requestLocation();
         }
-
         return location;
     }
-
-    /**
-     * Stop using GPS listener
-     * Calling this function will stop using GPS in your app
-     * */
-
     @SuppressLint("MissingPermission")
-    public void stopUsingGPS(){
-        if(locationManager != null){
-            locationManager.removeUpdates(GpsTracker.this);
+    private void requestLocation() {
+        if (location == null) {
+            //check the network permission
+            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions((Activity) mContext, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+            }
+            locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    MIN_TIME_BW_UPDATES,
+                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+
+            if (locationManager != null) {
+                location = locationManager
+                        .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                if (location != null) {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
+            }
         }
     }
+
 
     /**
      * Function to get latitude
@@ -161,7 +116,7 @@ public class GpsTracker extends Service implements LocationListener {
     }
 
     /**
-     * Function to check GPS/wifi enabled
+     * Function to check GPS enabled
      * @return boolean
      * */
 
@@ -195,21 +150,38 @@ public class GpsTracker extends Service implements LocationListener {
         alertDialog.show();
     }
 
+    @SuppressLint("MissingPermission")
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(@NonNull Location location) {
+       LatLng lng =new LatLng(location.getLatitude(),location.getLongitude());
+       activity.getDisplayedSites(activity.getLastSelectedRadius(),activity.getLastSelectedCategorie(),lng);
+       locationManager.removeUpdates(this);
+    }
+    //Should override them anyway to avoid LocationChange related SDK errors when testing on the tablet ( old OS version)
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
 
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
-    }
+    public void onProviderDisabled(@NonNull String provider) {
 
-    @Override
-    public void onProviderEnabled(String provider) {
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    //Shows toast if the device is not connected to internet
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        @SuppressLint("MissingPermission") NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(this, "Pas de connection Internet!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     @Override

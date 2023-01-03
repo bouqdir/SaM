@@ -7,5 +7,10 @@
     <item
             android:id="@+id/site_option_delete"
             android:title="@string/supprimer"
-        />
+    />
+
+    <item
+            android:id="@+id/site_option_update"
+            android:title="@string/update"
+    />
 </menu>

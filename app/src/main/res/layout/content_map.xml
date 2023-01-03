@@ -79,4 +79,20 @@
           android:layout_marginTop="15dp"
           tools:ignore="SpeakableTextPresentCheck"/>
 
+  <Button
+          android:id="@+id/stopPath"
+          android:text="@string/arreter_itineraire"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_margin="5sp"
+          android:visibility="invisible"
+          android:fontFamily="@font/openregular"
+          android:backgroundTint="@color/orange"
+          android:textColor="#FFFFFF"
+          android:textAllCaps="true"
+          android:layout_marginTop="782dp"
+          android:layout_alignParentEnd="true"
+          android:layout_marginEnd="370dp"/>
+
 </RelativeLayout>

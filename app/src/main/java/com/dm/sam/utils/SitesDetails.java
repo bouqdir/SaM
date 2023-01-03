@@ -2,32 +2,19 @@ package com.dm.sam.utils;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.view.View;
 import android.view.Window;
 import android.widget.*;
 import com.dm.sam.R;
 import com.dm.sam.activity.AddSiteActivity;
 import com.dm.sam.activity.CarteActivity;
-import com.dm.sam.activity.TabbedListsActivity;
-import com.dm.sam.listener.DrawPathListener;
 import com.dm.sam.model.Categorie;
 import com.dm.sam.model.Site;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class SitesDetails{
     CarteActivity activity;
     GoogleMap map;
-    DrawPathListener goToSelection;
     public SitesDetails(CarteActivity activity, GoogleMap map) {
 
         this.activity = activity;
@@ -45,9 +32,13 @@ public class SitesDetails{
         Button btn_go = dialog.findViewById(R.id.btn_go);
 
         LatLng sitesPosition = new LatLng(site.getLatitude(), site.getLongitude());
+        activity.setDestination(sitesPosition);
 
-        goToSelection = new DrawPathListener(sitesPosition, map,activity,dialog);
-        btn_go.setOnClickListener(goToSelection);
+        //goToSelection = new DrawPathListener(sitesPosition, map,activity,dialog);
+        btn_go.setOnClickListener(l->{
+            activity.direction();
+            dialog.dismiss();
+        });
 
         text_nom = dialog.findViewById(R.id.site_nom);
         txt_categorie = dialog.findViewById(R.id.categorie_txt);
@@ -78,9 +69,12 @@ public class SitesDetails{
 
         Button btn_go = dialog.findViewById(R.id.btn_go);
 
-        goToSelection = new DrawPathListener(latLng, map,activity,dialog);
-        btn_go.setOnClickListener(goToSelection);
+        activity.setDestination(latLng);
 
+        btn_go.setOnClickListener(l->{
+            activity.direction();
+            dialog.dismiss();
+        });
 
         close = dialog.findViewById(R.id.txtclose);
         close.setOnClickListener(v-> dialog.dismiss());

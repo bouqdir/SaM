@@ -24,6 +24,7 @@ import java.util.Objects;
 public class AddSiteActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     TextView txt_lat, txt_lng ;
     EditText add_nom, add_resume, add_code_postal;
+
     Spinner categorie_spinner;
     Button save_btn, cancel_btn, btn_add_cat;
     float lat, lng;
@@ -51,14 +52,22 @@ public class AddSiteActivity extends AppCompatActivity implements AdapterView.On
             Intent i=new Intent(this, AddCategorieActivity.class);
             i.putExtra("latitude",String.valueOf(lat));
             i.putExtra("longitude",String.valueOf(lng));
+            if(!add_nom.getText().toString().equals("")) i.putExtra("site_nom",add_nom.getText().toString());
+            if(!add_code_postal.getText().toString().equals("")) i.putExtra("site_code_postal",add_code_postal.getText().toString());
+            if(!add_resume.getText().toString().equals("")) i.putExtra("site_resume",add_resume.getText().toString());
+
             startActivity(i);
         });
+
         cancel_btn.setOnClickListener(v-> startActivity(new Intent(this, CarteActivity.class)));
+
         // Disable save button if the name is not provided
         add_nom.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                if(!charSequence.toString().equals("") && charSequence.toString()!=null ){
+                    save_btn.setEnabled(true);
+                }
             }
 
             @Override
@@ -67,13 +76,19 @@ public class AddSiteActivity extends AppCompatActivity implements AdapterView.On
             }
 
             public void afterTextChanged(Editable s) {
-                if(!s.equals("")){
+                if(!s.toString().equals("") && s.toString()!=null){
                     save_btn.setEnabled(true);
                 }else{
                     save_btn.setEnabled(false);
                 }
             }
         });
+
+        if(!add_nom.getText().toString().equals("") && add_nom.getText().toString()!=null)
+            save_btn.setEnabled(true);
+
+        Intent i = getIntent();
+
         save_btn.setOnClickListener(addButtonListener);
     }
 
@@ -86,6 +101,9 @@ public class AddSiteActivity extends AppCompatActivity implements AdapterView.On
         btn_add_cat=findViewById(R.id.ajouterCategorie);
 
         add_nom = findViewById(R.id.edit_txt_nom);
+        add_code_postal= findViewById(R.id.edit_txt_codepostal);
+        add_resume= findViewById(R.id.edit_txt_resume);
+
 
         categorie_spinner = findViewById(R.id.cat_spinner);
         categorie_spinner.setOnItemSelectedListener(this);
@@ -96,11 +114,22 @@ public class AddSiteActivity extends AppCompatActivity implements AdapterView.On
             categories.add(categorie.getNom());
         }
 
+        // Receive data when the activity is launched from AddCategoryActivity or Site item modification menu option
         Intent i = getIntent();
         float e1 =Float.parseFloat(i.getStringExtra("latitude"));
         float e2 =Float.parseFloat(i.getStringExtra("longitude"));
-        //lat=e1;
-        //lng=e2;
+        if(i.hasExtra("site_resume")) add_resume.setText(i.getStringExtra("site_resume"));
+        if(i.hasExtra("site_nom")) add_nom.setText(i.getStringExtra("site_nom"));
+        if(i.hasExtra("site_code_postal")) add_code_postal.setText(i.getStringExtra("site_code_postal"));
+
+        // set Categorie value in the spinner
+        if(i.hasExtra("site_categorie")) {
+
+            String cat = db.getCategorie(Integer.parseInt(i.getStringExtra("site_categorie"))).getNom();
+            categorie_spinner.setSelection(categories.indexOf(cat));
+        }
+
+
          lat = (float)round(e1,4);
          lng = (float)round(e2,4);
 

@@ -6,6 +6,7 @@ import android.widget.*;
 import com.dm.sam.R;
 import com.dm.sam.activity.AddSiteActivity;
 import com.dm.sam.activity.CarteActivity;
+import com.dm.sam.activity.SitesFragment;
 import com.dm.sam.db.DatabaseHelper;
 import com.dm.sam.model.Categorie;
 import com.dm.sam.model.Site;
@@ -43,9 +44,22 @@ public class AddSiteButtonListener implements View.OnClickListener{
         site.setCategorie(db.getCategorieByName(activity.getSelectedCategorie()).getId_categorie());
         site.setLatitude((float)activity.getLatLng().latitude);
         site.setLongitude((float)activity.getLatLng().longitude);
-        db.addSite(site);
-        activity.startActivity(new Intent(activity, CarteActivity.class));
-        Toast.makeText(activity, "Nouveau site disponible sur votre carte !", Toast.LENGTH_LONG).show();
+
+        Intent intent1 = activity.getIntent();
+        if(intent1.hasExtra("site_id")){
+            site.setId_site(Integer.parseInt(intent1.getStringExtra("site_id")));
+
+            db.updateSite(site);
+            activity.startActivity(new Intent(activity, SitesFragment.class));
+            Toast.makeText(activity, "Modification enregistrée!", Toast.LENGTH_SHORT).show();
+
+        }else {
+
+            db.addSite(site);
+            activity.startActivity(new Intent(activity, CarteActivity.class));
+            Toast.makeText(activity, "Nouveau site disponible sur votre carte !", Toast.LENGTH_LONG).show();
+
+        }
     }
 
 }

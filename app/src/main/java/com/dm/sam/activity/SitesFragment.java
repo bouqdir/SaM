@@ -57,23 +57,45 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(Menu.NONE, R.id.site_option_delete, Menu.NONE, "Supprimer");
+        menu.add(Menu.NONE, R.id.site_option_update, Menu.NONE, "Modifier");
         menu.add(Menu.NONE, R.id.site_option_show_on_map, Menu.NONE, "Voir sur la carte");
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        Intent i = new Intent(getContext(),CarteActivity.class);
-        i.putExtra("latitude",String.valueOf(siteList.get(selectedItemPosition).getLatitude()));
-        i.putExtra("longitude",String.valueOf(siteList.get(selectedItemPosition).getLongitude()));
+
         switch(item.getItemId()) {
             case R.id.site_option_delete:
                 this.showConfirmationDialog();
                 return true;
+            case R.id.site_option_update:
+                updateSite(selectedItemPosition);
+                return true;
             case R.id.site_option_show_on_map:
-                startActivity(i);
+                showSiteOnMap();
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+    public void updateSite(int index){
+            Intent i = new Intent(getActivity(), AddSiteActivity.class);
+            i.putExtra("site_id",String.valueOf(siteList.get(index).getId_site()));
+            i.putExtra("site_nom",siteList.get(index).getNom());
+            i.putExtra("site_resume",siteList.get(index).getResume());
+            i.putExtra("longitude",String.valueOf(siteList.get(index).getLongitude()));
+            i.putExtra("latitude",String.valueOf(siteList.get(index).getLatitude()));
+            i.putExtra("categorie",siteList.get(index).getCategorie());
+            i.putExtra("site_code_postal",String.valueOf(siteList.get(index).getCode_postal()));
+            startActivity(i);
+    }
+
+    public  void showSiteOnMap(){
+        Intent i = new Intent(getContext(),CarteActivity.class);
+        i.putExtra("latitude",String.valueOf(siteList.get(selectedItemPosition).getLatitude()));
+        i.putExtra("longitude",String.valueOf(siteList.get(selectedItemPosition).getLongitude()));
+        startActivity(i);
+
     }
     public void showConfirmationDialog(){
         final Dialog dialog = new Dialog(getContext());

@@ -60,6 +60,7 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(Menu.NONE, R.id.cat_option_delete, Menu.NONE, "Supprimer");
+        menu.add(Menu.NONE, R.id.cat_option_update, Menu.NONE, "Modifier");
     }
 
     @Override
@@ -67,6 +68,9 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
         switch(item.getItemId()) {
             case R.id.cat_option_delete:
                 categorieDeleteConfirmationDialog();
+                return true;
+            case R.id.cat_option_update:
+                updateSelection(selectedItemPosition);
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -99,6 +103,13 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
         dialog.show();
     }
 
+    public void updateSelection(int index){
+        Intent i = new Intent(getActivity(), AddCategorieActivity.class);
+        i.putExtra("id",String.valueOf(categorieList.get(index).getId_categorie()));
+        i.putExtra("name",categorieList.get(index).getNom());
+        i.putExtra("avatar",categorieList.get(index).getAvatar());
+        startActivity(i);
+    }
     @Override
     public void OnCategorieSelected(int position) {
         this.selectedItemPosition = position;

@@ -13,12 +13,15 @@
             android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
             android:fullBackupContent="@xml/backup_rules"
-            android:icon="@mipmap/ic_logo_sam"
+            android:icon="@drawable/ic_logo_sam"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_logo_sam_round"
+            android:roundIcon="@drawable/ic_logo_sam"
             android:supportsRtl="true"
             android:theme="@style/Theme.SaM"
             tools:targetApi="31">
+        <activity
+                android:name=".SitesByCategorieActivity"
+                android:exported="false"/>
         <activity
                 android:name=".activity.SplashActivity"
                 android:exported="true"
@@ -45,8 +48,7 @@
         <activity
                 android:name=".activity.PermissionsActivity"
                 android:exported="true"
-                android:theme="@style/Theme.SaM.NoActionBar"
-               />
+                android:theme="@style/Theme.SaM.NoActionBar"/>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 

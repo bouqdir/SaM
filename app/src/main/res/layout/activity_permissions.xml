@@ -14,9 +14,9 @@
             android:gravity="center_horizontal">
 
         <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@mipmap/ic_logo_sam"/>
+                android:layout_width="150sp"
+                android:layout_height="150sp"
+                android:src="@drawable/ic_logo_sam"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

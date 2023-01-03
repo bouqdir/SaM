@@ -33,7 +33,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nom_categorie">Ex:( Café, Cinéma, Shopping...)</string>
-    <string name="categorie">Catégorie : </string>
+    <string name="categorie">Catégorie :</string>
     <string name="nomDeCategorie">Donnez un nom à votre catégorie :</string>
     <string name="catSuppressionMessage">Voulez vous supprimer cette catégorie déffinitivement ?</string>
     <string name="warningSupression">la suppression d\'une catégorie entrainera la suppression de tous les
@@ -54,4 +54,6 @@
         et souhaite garder ses sites favoris sauvegardés à sa propre manière
     </string>
     <string name="AproposDeNous">A propos de SaM</string>
+    <string name="arreter_itineraire">"Arrêter le chemin "</string>
+    <string name="update">Modifier</string>
 </resources>
