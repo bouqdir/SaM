@@ -15,12 +15,10 @@ public class SplashActivity extends AppCompatActivity {
         Thread background = new Thread() {
             public void run() {
                 try {
-                    sleep(2 * 1000);
+                    sleep(SPLASH_TIME_OUT);
                     // After 2 seconds redirect to another intent
                     Intent i = new Intent(getBaseContext(), PermissionsActivity.class);
                     startActivity(i);
-
-                    //Remove activity
                     finish();
 
                 } catch (Exception e) {

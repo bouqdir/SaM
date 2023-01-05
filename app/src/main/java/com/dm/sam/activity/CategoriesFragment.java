@@ -56,6 +56,10 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
         return view ;
     }
 
+    /**
+     * This method creates the context menu related to the view.
+     *
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -63,6 +67,9 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
         menu.add(Menu.NONE, R.id.cat_option_update, Menu.NONE, "Modifier");
     }
 
+    /**
+     * This method delegates the roles according to the selected menu option
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -77,6 +84,9 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
         }
     }
 
+    /**
+     * This method is used to show the delete confirmation.
+     */
     public void categorieDeleteConfirmationDialog(){
 
         final Dialog dialog = new Dialog(getContext());
@@ -103,6 +113,9 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
         dialog.show();
     }
 
+    /**
+     * This method is used to send data to use for the update activity.
+     */
     public void updateSelection(int index){
         Intent i = new Intent(getActivity(), AddCategorieActivity.class);
         i.putExtra("id",String.valueOf(categorieList.get(index).getId_categorie()));
@@ -110,11 +123,19 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
         i.putExtra("avatar",categorieList.get(index).getAvatar());
         startActivity(i);
     }
+
+    /**
+     * This method is triggered when a value is selected from the categories list
+     */
     @Override
     public void OnCategorieSelected(int position) {
         this.selectedItemPosition = position;
     }
 
+
+    /**
+     * This method is triggered by a long click on the categories list
+     */
     @Override
     public void OnCategorieLongClick(int position) {
         this.selectedItemPosition = position;

@@ -29,6 +29,11 @@ public class CategorieViewAdapter extends RecyclerView.Adapter<CategorieViewAdap
         dbHelper= new DatabaseHelper(context);
     }
 
+
+    /**
+     * This method is used to set the viewHolder
+
+     */
     @NonNull
     @NotNull
     @Override
@@ -56,6 +61,7 @@ public class CategorieViewAdapter extends RecyclerView.Adapter<CategorieViewAdap
         return categorieList.size();
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView nameView;
         ImageView imageView;
@@ -70,7 +76,6 @@ public class CategorieViewAdapter extends RecyclerView.Adapter<CategorieViewAdap
             itemView.setOnClickListener(view -> {
                 if(onCategorieViewListener!=null){
                     int pos = getAdapterPosition();
-
                     if(pos != RecyclerView.NO_POSITION){
                         onCategorieViewListener.OnCategorieSelected(pos);
                     }

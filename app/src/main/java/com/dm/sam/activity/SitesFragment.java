@@ -35,7 +35,6 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
         recyclerView = view.findViewById(R.id.recyclerViewSite);
 
         db = new DatabaseHelper(getContext());
-        //db.createDefaultSitesIfNeed();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
@@ -52,7 +51,10 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
 
         return view ;
     }
-
+    /**
+     * This method creates the context menu related to the view.
+     *
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -60,7 +62,9 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
         menu.add(Menu.NONE, R.id.site_option_update, Menu.NONE, "Modifier");
         menu.add(Menu.NONE, R.id.site_option_show_on_map, Menu.NONE, "Voir sur la carte");
     }
-
+    /**
+     * This method delegates the roles according to the selected menu option
+     */
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
@@ -78,6 +82,9 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
                 return super.onContextItemSelected(item);
         }
     }
+    /**
+     * This method is used to send data to use for the update site activity.
+     */
     public void updateSite(int index){
             Intent i = new Intent(getActivity(), AddSiteActivity.class);
             i.putExtra("site_id",String.valueOf(siteList.get(index).getId_site()));
@@ -89,7 +96,9 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
             i.putExtra("site_code_postal",String.valueOf(siteList.get(index).getCode_postal()));
             startActivity(i);
     }
-
+    /**
+     * This method is used to send data to the Map activity  to show the selected site.
+     */
     public  void showSiteOnMap(){
         Intent i = new Intent(getContext(),CarteActivity.class);
         i.putExtra("latitude",String.valueOf(siteList.get(selectedItemPosition).getLatitude()));
@@ -97,6 +106,10 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
         startActivity(i);
 
     }
+
+    /**
+     * This method is used to show the delete confirmation.
+     */
     public void showConfirmationDialog(){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -108,20 +121,26 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
             db.deleteSite(siteList.get(selectedItemPosition).getId_site());
             siteList.remove(selectedItemPosition);
             siteViewAdapter.notifyItemRemoved(selectedItemPosition);
-
             dialog.dismiss();
         });
+
         btnCancel= dialog.findViewById(R.id.cancelDelete);
         btnCancel.setOnClickListener(v-> dialog.dismiss());
 
         dialog.show();
     }
 
+    /**
+     * This method is triggered when a value is selected from the sites list
+     */
     @Override
     public void OnSiteSelected(int position) {
         this.selectedItemPosition = position;
 
     }
+    /**
+     * This method is triggered by a long click on the sites list
+     */
     @Override
     public void OnSiteLongClick(int position) {
         this.selectedItemPosition = position;

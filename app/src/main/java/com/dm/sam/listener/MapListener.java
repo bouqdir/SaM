@@ -1,10 +1,8 @@
 package com.dm.sam.listener;
 
 import android.app.Dialog;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.dm.sam.R;
@@ -12,32 +10,35 @@ import com.dm.sam.activity.CarteActivity;
 import com.dm.sam.databinding.ActivityClientCarteBinding;
 import com.dm.sam.db.DatabaseHelper;
 import com.dm.sam.model.Site;
-import com.dm.sam.utils.SitesDetails;
+import com.dm.sam.utils.SitesManager;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import org.jetbrains.annotations.NotNull;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener,
         GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerDragListener,
         GoogleMap.OnMyLocationButtonClickListener, View.OnClickListener{
     CarteActivity activity;
-    SitesDetails sitesDetails;
+    SitesManager sitesManager;
     DatabaseHelper db;
     LatLng position;
     private GoogleMap mMap;
     ActivityClientCarteBinding binding;
 
-    public MapListener(CarteActivity activity, DatabaseHelper db, SitesDetails sitesDetails, GoogleMap map, ActivityClientCarteBinding binding) {
+    public MapListener(CarteActivity activity, DatabaseHelper db, SitesManager sitesManager, GoogleMap map, ActivityClientCarteBinding binding) {
         this.activity = activity;
-        this.sitesDetails = sitesDetails;
+        this.sitesManager = sitesManager;
         this.mMap=map;
         this.db=db;
         this.binding=binding;
     }
 
+
+    /**
+     * This method is triggered when the info window on the marker is clicked
+     * it shows a dialog message depending on the clicked site situation
+     */
     @Override
     public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
 
@@ -47,26 +48,32 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
 
         Site site = db.getSiteByLatLng(latLng);
         if(site!=null) {
-            sitesDetails.showDetailsDialog(site);
+            sitesManager.showDetailsDialog(site);
         }
         else {
-            sitesDetails.showNoDetailsDialog(latLng);
+            sitesManager.showNoDetailsDialog(latLng);
         }
     }
 
-
+    /**
+     * This method is triggered when a position on the map is clicked
+     * it saves the clicked position in a global variable to use later
+     */
     @Override
     public void onMapClick(LatLng latLng) {
-
         position = latLng;
-
     }
 
+    /**
+     * This method is triggered by a long press for on the map
+     *
+     */
     @Override
     public void onMapLongClick(@NonNull @NotNull LatLng latLng) {
-        Site s = db.getSiteByLatLng((latLng));
-        if(s!=null) sitesDetails.showDetailsDialog(s);
-        else sitesDetails.showNoDetailsDialog(latLng);
+       // Site s = db.getSiteByLatLng((latLng));
+        //if(s!=null) sitesManager.showDetailsDialog(s);
+        //else
+        sitesManager.showNoDetailsDialog(latLng);
     }
 
     @Override
@@ -79,6 +86,11 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
 
     }
 
+    /**
+     * This method is triggered by the end of the drag action on a marker
+     * it applies the current filter on the selected position
+     *
+     */
     @Override
     public void onMarkerDragEnd(@NonNull @NotNull Marker marker) {
         LatLng position = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
@@ -92,6 +104,11 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
     public void onMarkerDragStart(@NonNull @NotNull Marker marker) {
     }
 
+    /**
+     * This method is triggered when myLocationButton is clicked
+     * it repositions the camera
+     *
+     */
     @Override
     public boolean onMyLocationButtonClick() {
         //activity.getLocation(binding.getRoot());
@@ -99,6 +116,10 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
         return false;
     }
 
+    /**
+     * This method is triggered by a click on the info floating button
+     * it shows a modal with a description of the app
+     */
     @Override
     public void onClick(View view) {
         final Dialog dialog =new Dialog(activity);

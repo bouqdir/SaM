@@ -17,7 +17,6 @@ public class AddCategorieButtonListener implements View.OnClickListener{
 
     AddCategorieActivity activity;
 
-
     public AddCategorieButtonListener(AddCategorieActivity activity) {
         this.activity = activity;
     }
@@ -32,6 +31,7 @@ public class AddCategorieButtonListener implements View.OnClickListener{
         edit_txt_nom=activity.findViewById(R.id.edit_txt_cat_nom);
 
         Intent intent1 = activity.getIntent();
+        // Update category
         if(intent1.hasExtra("id") && intent1.hasExtra("name") && intent1.hasExtra("avatar")){
             Categorie c = new Categorie();
             c.setId_categorie(Integer.parseInt(intent1.getStringExtra("id")));
@@ -43,6 +43,7 @@ public class AddCategorieButtonListener implements View.OnClickListener{
 
         }else {
 
+            //Add category
             Categorie categorie = new Categorie();
             categorie.setId_categorie(db.getCategoriesCount() + 1);
             categorie.setNom(edit_txt_nom.getText().toString());
@@ -54,10 +55,11 @@ public class AddCategorieButtonListener implements View.OnClickListener{
         }
 
         Intent i = activity.getIntent();
-        if(i.hasExtra("latitude")){
+        if(i.hasExtra("latitude") && i.hasExtra("longitude")){
             Intent intent = new Intent(activity, AddSiteActivity.class);
             intent.putExtra("latitude",i.getStringExtra("latitude"));
             intent.putExtra("longitude",i.getStringExtra("longitude"));
+
             if(i.hasExtra("site_nom"))  intent.putExtra("site_nom",i.getStringExtra("site_nom"));
             if(i.hasExtra("site_code_postal"))  intent.putExtra("site_code_postal",i.getStringExtra("site_code_postal"));
             if(i.hasExtra("site_resume")) intent.putExtra("site_resume",i.getStringExtra("site_resume"));
@@ -68,4 +70,24 @@ public class AddCategorieButtonListener implements View.OnClickListener{
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

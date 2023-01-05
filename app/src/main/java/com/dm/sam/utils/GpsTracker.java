@@ -36,13 +36,13 @@ public class GpsTracker extends Service implements LocationListener {
 
     Location location; // location
     double latitude; // latitude
-    double longitude; // longitude
+    double longitude; // longitudea
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 5; // 1 minute
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
@@ -90,7 +90,7 @@ public class GpsTracker extends Service implements LocationListener {
 
 
     /**
-     * Function to get latitude
+     * This method is used to get latitude
      * */
 
     public double getLatitude(){
@@ -103,20 +103,17 @@ public class GpsTracker extends Service implements LocationListener {
     }
 
     /**
-     * Function to get longitude
+     * This method is used to get longitude
      * */
-
     public double getLongitude(){
         if(location != null){
             longitude = location.getLongitude();
         }
-
-        // return longitude
         return longitude;
     }
 
     /**
-     * Function to check GPS enabled
+     * This method is used to check if GPS is enabled
      * @return boolean
      * */
 
@@ -125,10 +122,9 @@ public class GpsTracker extends Service implements LocationListener {
     }
 
     /**
-     * Function to show settings alert dialog
-     * On pressing Settings button will lauch Settings Options
+     * This method is used to show settings alert dialog
+     * On pressing Settings button, Settings Options will be launched
      * */
-
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         alertDialog.setTitle("GPS désactivé");
@@ -141,7 +137,6 @@ public class GpsTracker extends Service implements LocationListener {
             }
         });
 
-        // on pressing cancel button
         alertDialog.setNegativeButton("Retour", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -149,7 +144,11 @@ public class GpsTracker extends Service implements LocationListener {
         });
         alertDialog.show();
     }
-
+    /**
+     * This method is used when the current location changes
+     * the camera is moved and the showed locations are updated
+     *
+     * */
     @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {

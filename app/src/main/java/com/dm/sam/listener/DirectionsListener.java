@@ -12,30 +12,31 @@ import com.dm.sam.R;
 import com.dm.sam.activity.CarteActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class DirectionsListener {
-
-
+public class DirectionsListener implements Button.OnClickListener{
 
     CarteActivity activity;
     GoogleMap mMap;
-    Button goNow;
+    Button stopRoute;
+    private List<Polyline> polylines= new LinkedList<>();
+
 
     public DirectionsListener(CarteActivity activity, GoogleMap mMap) {
         this.activity = activity;
         this.mMap = mMap;
     }
 
+    /**
+     * This method is used to decode the provided response to positions to add to the path.
+     */
     private List<LatLng> decodePoly(String encoded) {
 
         List<LatLng> poly = new ArrayList<LatLng>();
@@ -69,9 +70,14 @@ public class DirectionsListener {
         return poly;
     }
 
+    /**
+     * This method is used to draw the walking path to the selected direction on the map
+     */
     public void direction(){
-        goNow=activity.findViewById(R.id.stopPath);
-        goNow.setVisibility(View.VISIBLE);
+        stopRoute=activity.findViewById(R.id.stopPath);
+        stopRoute.setVisibility(View.VISIBLE);
+
+        // Volley is an HTTP library that makes networking for Android apps easier and, most importantly, faster.
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
         String url = Uri.parse("https://maps.googleapis.com/maps/api/directions/json")
                 .buildUpon()
@@ -114,32 +120,33 @@ public class DirectionsListener {
                             polylineOptions.color(ContextCompat.getColor(activity, R.color.orange));
                             polylineOptions.geodesic(true);
                         }
-                        mMap.addPolyline(polylineOptions);
-                        mMap.addMarker(new MarkerOptions().position(new LatLng(activity.getDestination().latitude, activity.getDestination().longitude)).title("Destination"));
-                        mMap.addMarker(new MarkerOptions().position(new LatLng(activity.getcurrentPosition().latitude, activity.getcurrentPosition().longitude)).title("Départ"));
-
-                        /*
-                        LatLngBounds bounds = new LatLngBounds.Builder()
-                                .include(new LatLng(activity.getDestination().latitude, activity.getDestination().longitude))
-                                .include(new LatLng(activity.getcurrentPosition().latitude, activity.getcurrentPosition().longitude)).build();
-                        Point point = new Point();
-                        activity.getWindowManager().getDefaultDisplay().getSize(point);
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, point.x, 150, 30));
-
-                         */
+                        Polyline p=mMap.addPolyline(polylineOptions);
+                        Marker depart = mMap.addMarker(new MarkerOptions().position(new LatLng(activity.getDestination().latitude, activity.getDestination().longitude)).title("Destination"));
+                        Marker destination = mMap.addMarker(new MarkerOptions().position(new LatLng(activity.getcurrentPosition().latitude, activity.getcurrentPosition().longitude)).title("Départ"));
+                        activity.setMarkers(depart);
+                        activity.setMarkers(destination);
+                        polylines.add(p);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        }, error -> {
 
-            }
         });
         RetryPolicy retryPolicy = new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         jsonObjectRequest.setRetryPolicy(retryPolicy);
         requestQueue.add(jsonObjectRequest);
+    }
+
+
+    /**
+     * This method is triggered when the button to stop the path is clicked
+     */
+    @Override
+    public void onClick(View view) {
+        stopRoute.setVisibility(View.INVISIBLE);
+        for(Polyline p : polylines) { p.remove();}
+        activity.getDisplayedSites(activity.getLastSelectedRadius(),activity.getLastSelectedCategorie(),activity.getcurrentPosition());
     }
 }

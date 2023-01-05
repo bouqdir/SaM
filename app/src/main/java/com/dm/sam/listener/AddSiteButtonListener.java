@@ -46,6 +46,7 @@ public class AddSiteButtonListener implements View.OnClickListener{
         site.setLongitude((float)activity.getLatLng().longitude);
 
         Intent intent1 = activity.getIntent();
+        //If the id already exists update the site
         if(intent1.hasExtra("site_id")){
             site.setId_site(Integer.parseInt(intent1.getStringExtra("site_id")));
 
@@ -54,7 +55,7 @@ public class AddSiteButtonListener implements View.OnClickListener{
             Toast.makeText(activity, "Modification enregistrée!", Toast.LENGTH_SHORT).show();
 
         }else {
-
+            // if not add a new site
             db.addSite(site);
             activity.startActivity(new Intent(activity, CarteActivity.class));
             Toast.makeText(activity, "Nouveau site disponible sur votre carte !", Toast.LENGTH_LONG).show();

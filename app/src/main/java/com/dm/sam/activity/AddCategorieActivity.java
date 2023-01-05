@@ -14,6 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.dm.sam.R;
 import com.dm.sam.db.DatabaseHelper;
 import com.dm.sam.listener.AddCategorieButtonListener;
+import com.dm.sam.listener.CancelButtonListener;
+import com.dm.sam.listener.FormValidationWatcher;
 import com.dm.sam.model.Categorie;
 import com.dm.sam.model.Site;
 
@@ -24,7 +26,8 @@ public class AddCategorieActivity extends AppCompatActivity {
     Button  save_btn, cancel_btn;
     ImageView avatar_cat;
     AddCategorieButtonListener addCategorieButtonListener;
-
+    FormValidationWatcher formValidationWatcher;
+    CancelButtonListener cancelButtonListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,45 +47,35 @@ public class AddCategorieActivity extends AppCompatActivity {
         cancel_btn=findViewById(R.id.cancelBtn);
         avatar_cat=findViewById(R.id.cat_imageView);
 
-
-        Intent intent = getIntent();
-        if(intent.hasExtra("id") && intent.hasExtra("name") &&intent.hasExtra("avatar")){
-        edit_txt_nom.setText(intent.getStringExtra("name"));
-        /*
-        avatar_cat.setImageResource(
-            getResources().getIdentifier(intent.getStringExtra("avatar"), "drawable", getPackageName()));
-
-         */
-        }
-
-        addCategorieButtonListener = new AddCategorieButtonListener(this);
+        editionMode();
 
         // Disable save button if the name is not provided
-        edit_txt_nom.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        formValidationWatcher= new FormValidationWatcher(save_btn);
+        edit_txt_nom.addTextChangedListener(formValidationWatcher);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            public void afterTextChanged(Editable s) {
-                if(!s.toString().equals("") && s.toString()!=null){
-                    save_btn.setEnabled(true);
-                }else{
-                    save_btn.setEnabled(false);
-                }
-            }
-        });
-
+        addCategorieButtonListener = new AddCategorieButtonListener(this);
         save_btn.setOnClickListener(addCategorieButtonListener);
 
-        cancel_btn.setOnClickListener(v->{
-            startActivity(new Intent(this, TabbedListsActivity.class));
-        });
+        TabbedListsActivity tabbedListsActivity= new TabbedListsActivity();
+        cancelButtonListener= new CancelButtonListener(this,tabbedListsActivity);
+        cancel_btn.setOnClickListener(cancelButtonListener);
 
+    }
+
+    /**
+     * This method is used to set the name edit text value
+     * with the category to update if the activity is in edition mode.
+     */
+    public void editionMode() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("id") && intent.hasExtra("name") && intent.hasExtra("avatar")) {
+            edit_txt_nom.setText(intent.getStringExtra("name"));
+
+            /*
+        avatar_cat.setImageResource(
+            getResources().getIdentifier(intent.getStringExtra("avatar"), "drawable", getPackageName()));
+         */
+
+        }
     }
 }

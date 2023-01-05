@@ -7,21 +7,23 @@ import android.widget.*;
 import com.dm.sam.R;
 import com.dm.sam.activity.AddSiteActivity;
 import com.dm.sam.activity.CarteActivity;
+import com.dm.sam.listener.DirectionsListener;
 import com.dm.sam.model.Categorie;
 import com.dm.sam.model.Site;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
-public class SitesDetails{
+public class SitesManager {
     CarteActivity activity;
+    DirectionsListener directionsListener;
     GoogleMap map;
-    public SitesDetails(CarteActivity activity, GoogleMap map) {
+    public SitesManager(CarteActivity activity, GoogleMap map, DirectionsListener directionsListener) {
 
         this.activity = activity;
         this.map=map;
+        this.directionsListener=directionsListener;
     }
     public void showDetailsDialog(Site site) {
-
 
         final Dialog dialog =new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -34,9 +36,8 @@ public class SitesDetails{
         LatLng sitesPosition = new LatLng(site.getLatitude(), site.getLongitude());
         activity.setDestination(sitesPosition);
 
-        //goToSelection = new DrawPathListener(sitesPosition, map,activity,dialog);
         btn_go.setOnClickListener(l->{
-            activity.direction();
+            directionsListener.direction();
             dialog.dismiss();
         });
 
@@ -68,11 +69,9 @@ public class SitesDetails{
         dialog.setContentView(R.layout.empty_page);
 
         Button btn_go = dialog.findViewById(R.id.btn_go);
-
         activity.setDestination(latLng);
-
         btn_go.setOnClickListener(l->{
-            activity.direction();
+            directionsListener.direction();
             dialog.dismiss();
         });
 
