@@ -128,7 +128,7 @@ public class SQLiteSiteDao extends SQLiteDao<Site> implements ServiceDAO<Site> {
 
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_SITE,
                 allColumns,
-                DatabaseHelper.SITE_CATEGORIE + " = ?",
+                DatabaseHelper.SITE_CATEGORIE + " = ?" ,
                 new String[] { String.valueOf(idCat) },
                 null, null, null, null);
 
@@ -158,7 +158,6 @@ public class SQLiteSiteDao extends SQLiteDao<Site> implements ServiceDAO<Site> {
 
         if (cursor.moveToFirst()){
             return  cursorToObject(cursor);
-
         }
 
         return null;
@@ -176,24 +175,6 @@ public class SQLiteSiteDao extends SQLiteDao<Site> implements ServiceDAO<Site> {
                 cursor.getInt(5), cursor.getString(6));
     }
 
-    public boolean isCategoryUsed(Categorie category) {
-        openReadable();
-
-        Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_SITE,
-                allColumns,
-                DatabaseHelper.CATEGORIE_ID + " = ?",
-                new String[] { String.valueOf(category.getId_categorie()) },
-                null, null, null, null);
-
-        boolean result = cursor.moveToFirst();
-
-        cursor.close();
-
-        close();
-
-        return result;
-    }
-
     private ContentValues putContentValues(Site site) {
         ContentValues values = new ContentValues();
 
@@ -207,6 +188,9 @@ public class SQLiteSiteDao extends SQLiteDao<Site> implements ServiceDAO<Site> {
         return values;
     }
 
+    /**
+     * This method creates default sites for the first installation
+     */
     public void createDefaultSitesIfNeed() {
         openWritable();
         int count = this.getSitesCount();

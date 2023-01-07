@@ -84,6 +84,7 @@ public class FilterListener  implements AdapterView.OnItemSelectedListener, View
                 radius_entry=edt_txt_radius.getText().toString();
             }
             selected_category=categorie_spinner.getSelectedItem().toString();
+            activity.setLastSelectedCategorie(selected_category);
             activity.getDisplayedSites(Float.parseFloat(radius_entry),selected_category,activity.getcurrentPosition());
             dialog.dismiss();
         });

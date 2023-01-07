@@ -62,18 +62,11 @@ public class SiteService implements ServiceDAO<Site>{
         return sqLiteSiteDao.getWithCursor(id);
     }
 
-
-
-    public boolean isCategoryUsed(Categorie category) {
-        return sqLiteSiteDao.isCategoryUsed(category);
-    }
-
     public void createDefaultSitesIfNeed()  {
         sqLiteSiteDao.createDefaultSitesIfNeed();
     }
     public int getSitesCount() {
         return sqLiteSiteDao.getSitesCount();
     }
-
 
 }

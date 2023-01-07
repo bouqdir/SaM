@@ -226,6 +226,12 @@ public class CarteActivity extends FragmentActivity implements  OnMapReadyCallba
         return LastSelectedCategorie;
     }
     /**
+     * This method is used to get the LastSelectedCategorie
+     * */
+    public void setLastSelectedCategorie( String name){
+         LastSelectedCategorie= name;
+    }
+    /**
      * This method is used to get LastSelectedRadius
      * */
     public float getLastSelectedRadius(){
@@ -273,7 +279,7 @@ public class CarteActivity extends FragmentActivity implements  OnMapReadyCallba
         Marker marker;
 
         if(getLastSelectedCategorie()!=null){
-            categorie_txt_view.setText(categorie);
+            categorie_txt_view.setText(getLastSelectedCategorie());
         }
         currentLocationMarker = mMap.addMarker(new MarkerOptions()
                 .position(position)

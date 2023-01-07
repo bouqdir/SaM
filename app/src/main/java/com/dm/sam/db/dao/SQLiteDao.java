@@ -17,23 +17,27 @@ public abstract class SQLiteDao<T> {
         this.databaseHelper = DatabaseHelper.getInstance(this.context);
     }
 
-    /*
-        Ecrire dans la bdd
+    /**
+     * This method gives us writing access in the database
      */
     public void openWritable() throws SQLException {
         sqLiteDatabase = databaseHelper.getWritableDatabase();
     }
 
-    /*
-        Lire dans la bdd
+    /**
+     * This method gives us reading access in the database
      */
     public void openReadable() throws SQLException {
         sqLiteDatabase = databaseHelper.getReadableDatabase();
     }
-
+    /**
+     * This method closes the database connection
+     */
     public void close() {
         databaseHelper.close();
     }
-
+    /**
+     * This method converts the given cursor to an object
+     */
     public abstract T cursorToObject(Cursor cursor);
 }

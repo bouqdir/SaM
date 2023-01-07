@@ -4,42 +4,36 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import com.dm.sam.db.DatabaseHelper;
 import com.dm.sam.db.service.ServiceDAO;
 import com.dm.sam.model.Categorie;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
-public class SQLiteCategoryDao extends SQLiteDao<Categorie> implements ServiceDAO<Categorie> {
+public class SQLiteCategorieDao extends SQLiteDao<Categorie> implements ServiceDAO<Categorie> {
 
     @SuppressLint("StaticFieldLeak")
-    private static SQLiteCategoryDao instance;
+    private static SQLiteCategorieDao instance;
 
     private static final String[] allColumns = { DatabaseHelper.CATEGORIE_ID,DatabaseHelper.CATEGORIE_NAME, DatabaseHelper.CATEGORIE_AVATAR };
 
-    public SQLiteCategoryDao(Context context) {
+    public SQLiteCategorieDao(Context context) {
         super(context);
-
     }
 
-    public static SQLiteCategoryDao getInstance(Context context) {
+    public static SQLiteCategorieDao getInstance(Context context) {
         if (instance == null)
-            instance = new SQLiteCategoryDao(context);
+            instance = new SQLiteCategorieDao(context);
 
         return instance;
     }
 
     @Override
-    public long create(Categorie category) {
+    public long create(Categorie categorie) {
         openWritable();
 
-        ContentValues values = putContentValues(category);
+        ContentValues values = putContentValues(categorie);
 
         long lastInsertedId = sqLiteDatabase.insert(DatabaseHelper.TABLE_CATEGORIE,
                 null,
@@ -51,12 +45,12 @@ public class SQLiteCategoryDao extends SQLiteDao<Categorie> implements ServiceDA
     }
 
     @Override
-    public int update(Categorie category) {
+    public int update(Categorie categorie) {
         openWritable();
 
-        ContentValues values = putContentValues(category);
+        ContentValues values = putContentValues(categorie);
 
-        int returnedId = sqLiteDatabase.update(DatabaseHelper.TABLE_CATEGORIE, values, DatabaseHelper.CATEGORIE_ID + " = ?", new String[] { String.valueOf(category.getId_categorie()) });
+        int returnedId = sqLiteDatabase.update(DatabaseHelper.TABLE_CATEGORIE, values, DatabaseHelper.CATEGORIE_ID + " = ?", new String[] { String.valueOf(categorie.getId_categorie()) });
 
         return returnedId;
     }
@@ -86,13 +80,13 @@ public class SQLiteCategoryDao extends SQLiteDao<Categorie> implements ServiceDA
 
         cursor.moveToFirst();
 
-        Categorie category = cursorToObject(cursor);
+        Categorie categorie = cursorToObject(cursor);
 
         cursor.close();
 
         close();
 
-        return category;
+        return categorie;
     }
 
     public Categorie findByName(String name) {
@@ -123,11 +117,11 @@ public class SQLiteCategoryDao extends SQLiteDao<Categorie> implements ServiceDA
 
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
-        Categorie category;
+        Categorie categorie;
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            category = cursorToObject(cursor);
-            categories.add(category);
+            categorie = cursorToObject(cursor);
+            categories.add(categorie);
 
             cursor.moveToNext();
         }

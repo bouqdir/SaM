@@ -10,6 +10,7 @@ import com.dm.sam.activity.SitesFragment;
 import com.dm.sam.activity.TabbedListsActivity;
 import com.dm.sam.db.service.CategorieService;
 import com.dm.sam.db.service.SiteService;
+import com.dm.sam.model.Categorie;
 import com.dm.sam.model.Site;
 
 public class AddSiteButtonListener implements View.OnClickListener{
@@ -26,7 +27,7 @@ public class AddSiteButtonListener implements View.OnClickListener{
         EditText add_nom, add_resume, add_code_postal;
         Site site= new Site();
         int zipCode;
-
+        Categorie cat= new Categorie();
         siteService=SiteService.getInstance(activity);
         categorieService = CategorieService.getInstance(activity);
 
@@ -42,7 +43,10 @@ public class AddSiteButtonListener implements View.OnClickListener{
         site.setNom(add_nom.getText().toString());
         site.setResume(add_resume.getText().toString());
         site.setCode_postal(zipCode);
-        site.setCategorie(categorieService.findByName(activity.getSelectedCategorie()).getId_categorie());
+
+        cat = categorieService.findByName(activity.getSelectedCategorie());
+        Long idCat = categorieService.findByName(activity.getSelectedCategorie()).getId_categorie();
+        site.setCategorie(idCat);
         site.setLatitude((float)activity.getLatLng().latitude);
         site.setLongitude((float)activity.getLatLng().longitude);
 

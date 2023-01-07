@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper instance = null;
-
-    private SQLiteDatabase db;
     public static final String DATABASE_NAME = "sam.db";
     public static final int DATABASE_VERSION = 1;
     public  static final String TABLE_SITE = "Site";
@@ -62,7 +60,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIE);
       onCreate(db);
     }
-
 
 }
 
