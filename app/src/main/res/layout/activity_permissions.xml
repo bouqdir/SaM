@@ -16,7 +16,7 @@
         <ImageView
                 android:layout_width="150sp"
                 android:layout_height="150sp"
-                android:src="@drawable/ic_logo_sam"/>
+                android:src="@drawable/ic_logo_sam_rounded"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

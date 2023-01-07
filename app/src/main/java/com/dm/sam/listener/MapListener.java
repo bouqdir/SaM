@@ -9,6 +9,7 @@ import com.dm.sam.R;
 import com.dm.sam.activity.CarteActivity;
 import com.dm.sam.databinding.ActivityClientCarteBinding;
 import com.dm.sam.db.DatabaseHelper;
+import com.dm.sam.db.service.SiteService;
 import com.dm.sam.model.Site;
 import com.dm.sam.utils.SitesManager;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,16 +22,15 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
         GoogleMap.OnMyLocationButtonClickListener, View.OnClickListener{
     CarteActivity activity;
     SitesManager sitesManager;
-    DatabaseHelper db;
+    SiteService siteService;
     LatLng position;
     private GoogleMap mMap;
     ActivityClientCarteBinding binding;
 
-    public MapListener(CarteActivity activity, DatabaseHelper db, SitesManager sitesManager, GoogleMap map, ActivityClientCarteBinding binding) {
+    public MapListener(CarteActivity activity, SitesManager sitesManager, GoogleMap map, ActivityClientCarteBinding binding) {
         this.activity = activity;
         this.sitesManager = sitesManager;
         this.mMap=map;
-        this.db=db;
         this.binding=binding;
     }
 
@@ -41,12 +41,12 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
      */
     @Override
     public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
-
+        siteService=SiteService.getInstance(activity);
         float lat =(float)marker.getPosition().latitude;
         float lng =(float)marker.getPosition().longitude;
         LatLng latLng = new LatLng(lat, lng);
 
-        Site site = db.getSiteByLatLng(latLng);
+        Site site = siteService.findByLatLng(latLng);
         if(site!=null) {
             sitesManager.showDetailsDialog(site);
         }

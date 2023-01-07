@@ -1,21 +1,24 @@
 package com.dm.sam.model;
 
+import android.content.ContentValues;
+import com.dm.sam.db.DatabaseHelper;
+
 import java.io.Serializable;
 
-public class Site implements Serializable {
+public class Site {
 
-    private  int id_site;
+    private  long id_site;
     private String nom;
     private float latitude;
     private float longitude;
     private int code_postal;
-    private int categorie; // id_categorie
+    private long categorie; // id_categorie
     private String resume;
 
     public Site() {
     }
 
-    public Site(String nom, float latitude, float longitude, int code_postal, int categorie, String resume) {
+    public Site(String nom, float latitude, float longitude, int code_postal, long categorie, String resume) {
         this.nom = nom;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -25,7 +28,7 @@ public class Site implements Serializable {
 
     }
 
-    public Site(int id_site, String nom, float latitude, float longitude, int code_postal, int categorie, String resume) {
+    public Site(long id_site, String nom, float latitude, float longitude, int code_postal, long categorie, String resume) {
         this.id_site = id_site;
         this.nom = nom;
         this.latitude = latitude;
@@ -35,11 +38,12 @@ public class Site implements Serializable {
         this.resume = resume;
     }
 
-    public int getId_site() {
+
+    public long getId_site() {
         return id_site;
     }
 
-    public void setId_site(int id_site) {
+    public void setId_site(long id_site) {
         this.id_site = id_site;
     }
 
@@ -75,11 +79,11 @@ public class Site implements Serializable {
         this.code_postal = code_postal;
     }
 
-    public int getCategorie() {
+    public long getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(int categorie) {
+    public void setCategorie(long categorie) {
         this.categorie = categorie;
     }
 
@@ -90,4 +94,19 @@ public class Site implements Serializable {
     public void setResume(String resume) {
         this.resume = resume;
     }
+
+    public static Site fromContentValues(ContentValues values) {
+        final Site site = new Site();
+
+        if (values.containsKey("id_site")) site.setId_site(values.getAsLong("id_site"));
+        if (values.containsKey("label")) site.setNom(values.getAsString("nom"));
+        if (values.containsKey("latitude")) site.setLatitude(values.getAsFloat("latitude"));
+        if (values.containsKey("longitude")) site.setLongitude(values.getAsFloat("longitude"));
+        if (values.containsKey("code_postal")) site.setCode_postal(values.getAsInteger("code_postal"));
+        if (values.containsKey("categorie")) site.setCategorie(values.getAsInteger("categorie"));
+        if (values.containsKey("resume")) site.setResume(values.getAsString("summary"));
+
+        return site;
+    }
+
 }

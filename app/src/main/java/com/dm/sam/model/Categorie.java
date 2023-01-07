@@ -1,27 +1,29 @@
 package com.dm.sam.model;
 
+import android.content.ContentValues;
+
 import java.io.Serializable;
 
-public class Categorie implements Serializable
+public class Categorie
 {
-    private int id_categorie;
+    private long id_categorie;
     private String nom;
     private String avatar;
 
     public Categorie() {
     }
 
-    public Categorie(int id_categorie, String nom, String avatar) {
+    public Categorie(long id_categorie, String nom, String avatar) {
         this.id_categorie = id_categorie;
         this.nom = nom;
         this.avatar = avatar;
     }
 
-    public int getId_categorie() {
+    public long getId_categorie() {
         return id_categorie;
     }
 
-    public void setId_categorie(int id_categorie) {
+    public void setId_categorie(long id_categorie) {
         this.id_categorie = id_categorie;
     }
 
@@ -39,5 +41,15 @@ public class Categorie implements Serializable
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public static Categorie fromContentValues(ContentValues values) {
+        final Categorie category = new Categorie();
+
+        if (values.containsKey("id")) category.setId_categorie(values.getAsInteger("id_categorie"));
+        if (values.containsKey("id_categorie")) category.setNom(values.getAsString("nom"));
+        if (values.containsKey("avatar")) category.setNom(values.getAsString("avatar"));
+
+        return category;
     }
 }

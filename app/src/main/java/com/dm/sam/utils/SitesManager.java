@@ -7,6 +7,7 @@ import android.widget.*;
 import com.dm.sam.R;
 import com.dm.sam.activity.AddSiteActivity;
 import com.dm.sam.activity.CarteActivity;
+import com.dm.sam.db.service.CategorieService;
 import com.dm.sam.listener.DirectionsListener;
 import com.dm.sam.model.Categorie;
 import com.dm.sam.model.Site;
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class SitesManager {
     CarteActivity activity;
     DirectionsListener directionsListener;
+    CategorieService categorieService;
     GoogleMap map;
     public SitesManager(CarteActivity activity, GoogleMap map, DirectionsListener directionsListener) {
 
@@ -25,6 +27,7 @@ public class SitesManager {
     }
     public void showDetailsDialog(Site site) {
 
+        categorieService= CategorieService.getInstance(activity);
         final Dialog dialog =new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -47,7 +50,7 @@ public class SitesManager {
         avatar_categorie =dialog.findViewById(R.id.categorie_avatar);
         close = dialog.findViewById(R.id.txtclose);
 
-        Categorie c = activity.db.getCategorie(site.getCategorie());
+        Categorie c = categorieService.findById(site.getCategorie());
         //Set site details
         String nom= site.getNom() +", " + site.getCode_postal();
         text_nom.setText(nom);

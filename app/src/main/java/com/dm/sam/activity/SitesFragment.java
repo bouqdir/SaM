@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dm.sam.R;
 import com.dm.sam.db.DatabaseHelper;
+import com.dm.sam.db.service.CategorieService;
+import com.dm.sam.db.service.SiteService;
 import com.dm.sam.model.Site;
 import com.dm.sam.adapter.SiteViewAdapter;
 
@@ -22,9 +24,9 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
     RecyclerView recyclerView;
     List<Site> siteList = new ArrayList<Site>();
    public  SiteViewAdapter siteViewAdapter;
-    DatabaseHelper db;
     int selectedItemPosition;
     Button btnDelete, btnCancel;
+    SiteService siteService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,12 +36,12 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
 
         recyclerView = view.findViewById(R.id.recyclerViewSite);
 
-        db = new DatabaseHelper(getContext());
+        siteService= SiteService.getInstance(getActivity());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
 
-        this.siteList = db.getAllSites();
+        this.siteList = siteService.findAll();
 
         if (siteList.size() > 0){
             siteViewAdapter = new SiteViewAdapter(view.getContext(), this.siteList,this);
@@ -118,7 +120,7 @@ public class SitesFragment extends Fragment  implements SiteViewAdapter.OnSiteVi
         dialog.setContentView(R.layout.site_delete_confirmation_dialog);
         btnDelete= dialog.findViewById(R.id.confirmDelete);
         btnDelete.setOnClickListener(v->{
-            db.deleteSite(siteList.get(selectedItemPosition).getId_site());
+            siteService.delete(siteList.get(selectedItemPosition).getId_site());
             siteList.remove(selectedItemPosition);
             siteViewAdapter.notifyItemRemoved(selectedItemPosition);
             dialog.dismiss();

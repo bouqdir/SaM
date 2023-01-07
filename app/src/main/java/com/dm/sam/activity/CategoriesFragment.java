@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dm.sam.R;
 import com.dm.sam.db.DatabaseHelper;
+import com.dm.sam.db.service.CategorieService;
+import com.dm.sam.db.service.SiteService;
 import com.dm.sam.model.Categorie;
 import com.dm.sam.model.Site;
 import com.dm.sam.adapter.CategorieViewAdapter;
@@ -23,7 +25,8 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
     RecyclerView recyclerView;
     List<Categorie> categorieList = new ArrayList<Categorie>();
     CategorieViewAdapter categorieViewAdapter;
-    DatabaseHelper db;
+    CategorieService categorieService;
+    SiteService siteService;
     int selectedItemPosition;
     Button btnDelete, btnCancel;
     FloatingActionButton floatingActionButton;
@@ -39,12 +42,13 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
             startActivity(i);
         });
 
-        db = new DatabaseHelper(getContext());
+        categorieService = CategorieService.getInstance(getActivity());
+        siteService= SiteService.getInstance(getActivity());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
 
-        this.categorieList = db.getAllCategories();
+        this.categorieList = categorieService.findAll();
 
         if (categorieList.size() > 0){
             categorieViewAdapter = new CategorieViewAdapter(view.getContext(), this.categorieList,this);
@@ -96,12 +100,12 @@ public class CategoriesFragment extends Fragment implements CategorieViewAdapter
 
         btnDelete= dialog.findViewById(R.id.confirmDelete);
         btnDelete.setOnClickListener(v->{
-            List<Site> sites = db.getSitesByCategorie(categorieList.get(selectedItemPosition).getId_categorie());
+            List<Site> sites = siteService.findByCategory(categorieList.get(selectedItemPosition).getId_categorie());
             for (Site s : sites){
-                db.deleteSite(s.getId_site());
+                siteService.delete(s.getId_site());
                 //notify fragment with changes
             }
-            db.deleteCategorie(categorieList.get(selectedItemPosition).getId_categorie());
+            categorieService.delete(categorieList.get(selectedItemPosition).getId_categorie());
             categorieList.remove(selectedItemPosition);
             categorieViewAdapter.notifyItemRemoved(selectedItemPosition);
             dialog.dismiss();

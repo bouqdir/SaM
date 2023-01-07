@@ -3,10 +3,6 @@ package com.dm.sam.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.*;
 import android.os.Build;
 import android.os.Handler;
@@ -17,7 +13,8 @@ import android.os.Bundle;
 
 import com.dm.sam.R;
 import com.dm.sam.databinding.ActivityClientCarteBinding;
-import com.dm.sam.db.DatabaseHelper;
+import com.dm.sam.db.service.CategorieService;
+import com.dm.sam.db.service.SiteService;
 import com.dm.sam.listener.DirectionsListener;
 import com.dm.sam.listener.FilterListener;
 import com.dm.sam.listener.MapListener;
@@ -40,7 +37,8 @@ public class CarteActivity extends FragmentActivity implements  OnMapReadyCallba
     private static final int DEFAULT_ZOOM=17;
     private static final float DEFAULT_RADIUS=200;
     private ActivityClientCarteBinding binding;
-    public DatabaseHelper db;
+    CategorieService categorieService;
+    SiteService siteService;
     private LatLng currentLocation, destination;
     private GoogleMap mMap;
     private MapListener  mapListener;
@@ -98,7 +96,8 @@ public class CarteActivity extends FragmentActivity implements  OnMapReadyCallba
      * This method is used to initialize all the variables before use.
      */
     public void initializer(){
-        db = new DatabaseHelper(this);
+        siteService = SiteService.getInstance(this);
+        categorieService = CategorieService.getInstance(this);
         floatingSearchButton = findViewById(R.id.floatingSearchButton);
         floatingSitesListButton=findViewById(R.id.floatingSitesListButton);
         floatingInfosButton= findViewById(R.id.floatingInfoButton);
@@ -106,8 +105,8 @@ public class CarteActivity extends FragmentActivity implements  OnMapReadyCallba
         filterListener= new FilterListener(CarteActivity.this,floatingSearchButton);
         categorie_txt_view= findViewById(R.id.categorie_txt_view);
         categorie_txt_view.setText("Toutes les catégories");
-        db.setDefaultCategories();
-        db.createDefaultSitesIfNeed();
+        categorieService.setDefaultCategories();
+        siteService.createDefaultSitesIfNeed();
         LastSelectedRadius=DEFAULT_RADIUS;
     }
     /**
@@ -148,7 +147,7 @@ public class CarteActivity extends FragmentActivity implements  OnMapReadyCallba
         //Initializing the listeners and updating the location
         directionsListener= new DirectionsListener(this,mMap);
         sitesManager = new SitesManager(CarteActivity.this, mMap,directionsListener);
-        mapListener= new MapListener(this,db, sitesManager, mMap,binding);
+        mapListener= new MapListener(this,sitesManager, mMap,binding);
         getLocation(this.binding.getRoot());
 
         //getting extra from the site fragment list to use to show on the map
@@ -284,10 +283,10 @@ public class CarteActivity extends FragmentActivity implements  OnMapReadyCallba
 
         // get the sites to show based on the selected category
         if(categorie!=null){
-            Categorie c = db.getCategorieByName(categorie);
-            places= Objects.requireNonNull(db.getSitesByCategorie(c.getId_categorie()));
+            Categorie c = categorieService.findByName(categorie);
+            places= Objects.requireNonNull(siteService.findByCategory(c.getId_categorie()));
         }else{
-            places= Objects.requireNonNull(db.getAllSites());
+            places= Objects.requireNonNull(siteService.findAll());
         }
 
         //Calculate the distance between the current location and the sites on the list

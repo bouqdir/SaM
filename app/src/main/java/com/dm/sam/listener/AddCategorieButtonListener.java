@@ -2,20 +2,19 @@ package com.dm.sam.listener;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 import com.dm.sam.R;
 import com.dm.sam.activity.AddCategorieActivity;
 import com.dm.sam.activity.AddSiteActivity;
 import com.dm.sam.activity.TabbedListsActivity;
-import com.dm.sam.db.DatabaseHelper;
+import com.dm.sam.db.service.CategorieService;
 import com.dm.sam.model.Categorie;
 
 public class AddCategorieButtonListener implements View.OnClickListener{
 
     AddCategorieActivity activity;
+    CategorieService categorieService;
 
     public AddCategorieButtonListener(AddCategorieActivity activity) {
         this.activity = activity;
@@ -24,9 +23,7 @@ public class AddCategorieButtonListener implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         EditText edit_txt_nom;
-        DatabaseHelper db;
-
-        db= new DatabaseHelper(activity);
+        categorieService = CategorieService.getInstance(activity);
 
         edit_txt_nom=activity.findViewById(R.id.edit_txt_cat_nom);
 
@@ -38,22 +35,29 @@ public class AddCategorieButtonListener implements View.OnClickListener{
             c.setNom(edit_txt_nom.getText().toString());
             c.setAvatar(intent1.getStringExtra("avatar"));
 
-            db.updateCategorie(c);
+            categorieService.update(c);
             Toast.makeText(activity, "Modification enregistrée!", Toast.LENGTH_SHORT).show();
 
         }else {
 
             //Add category
             Categorie categorie = new Categorie();
-            categorie.setId_categorie(db.getCategoriesCount() + 1);
+            categorie.setId_categorie(categorieService.getCategoriesCount() + 1);
             categorie.setNom(edit_txt_nom.getText().toString());
             categorie.setAvatar(String.valueOf(activity.getResources().getIdentifier("ic_baseline_category_24", "drawable", activity.getPackageName())));
+            if(categorieService.findByName(categorie.getNom())!=null){
+                Toast.makeText(activity, "Cette catégorie fait déjà partie de votre liste !", Toast.LENGTH_SHORT).show();
+                activity.startActivity(new Intent(activity, TabbedListsActivity.class));
 
-            db.addCategorie(categorie);
-            Toast.makeText(activity, "Nouvelle catégorie ajoutée à la liste!", Toast.LENGTH_SHORT).show();
+            }else {
+                categorieService.create(categorie);
+                Toast.makeText(activity, "Nouvelle catégorie ajoutée à la liste!", Toast.LENGTH_SHORT).show();
+            }
+
 
         }
 
+        // if the creation activity is launched from the creation site activity get site details
         Intent i = activity.getIntent();
         if(i.hasExtra("latitude") && i.hasExtra("longitude")){
             Intent intent = new Intent(activity, AddSiteActivity.class);

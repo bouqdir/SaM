@@ -22,7 +22,6 @@ public class TabsListener implements TabLayout.OnTabSelectedListener {
     public void onTabUnselected(TabLayout.Tab tab) {
 
     }
-
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 

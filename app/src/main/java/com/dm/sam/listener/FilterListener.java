@@ -6,6 +6,8 @@ import android.view.Window;
 import android.widget.*;
 import com.dm.sam.R;
 import com.dm.sam.activity.CarteActivity;
+import com.dm.sam.db.service.CategorieService;
+import com.dm.sam.db.service.SiteService;
 import com.dm.sam.model.Categorie;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -21,17 +23,11 @@ public class FilterListener  implements AdapterView.OnItemSelectedListener, View
     Button search_btn;
     String radius_entry ="200", selected_category=null;
     FloatingActionButton searchButton;
+    CategorieService categorieService;
 
     public FilterListener(CarteActivity activity, FloatingActionButton searchButton) {
         this.activity = activity;
         this.searchButton= searchButton;
-    }
-
-    public String selectedCategory(){
-        return this.selected_category;
-    }
-    public String selectedRadius(){
-        return this.radius_entry;
     }
 
 
@@ -57,6 +53,7 @@ public class FilterListener  implements AdapterView.OnItemSelectedListener, View
      */
     @Override
     public void onClick(View view) {
+        categorieService = CategorieService.getInstance(activity);
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -66,7 +63,7 @@ public class FilterListener  implements AdapterView.OnItemSelectedListener, View
         categorie_spinner.setOnItemSelectedListener(this);
 
         ArrayList<String> categories = new ArrayList<String>();
-        List<Categorie> c= Objects.requireNonNull(activity.db.getAllCategories());
+        List<Categorie> c= Objects.requireNonNull(categorieService.findAll());
         for (Categorie categorie : c) {
             categories.add(categorie.getNom());
         }

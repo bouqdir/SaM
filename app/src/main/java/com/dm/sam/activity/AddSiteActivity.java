@@ -2,20 +2,17 @@
 package com.dm.sam.activity;
 
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import com.dm.sam.R;
-import com.dm.sam.db.DatabaseHelper;
+import com.dm.sam.db.service.CategorieService;
 import com.dm.sam.listener.AddSiteButtonListener;
 import com.dm.sam.listener.CancelButtonListener;
 import com.dm.sam.listener.FormValidationWatcher;
 import com.dm.sam.model.Categorie;
-import com.dm.sam.model.Site;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -29,7 +26,8 @@ public class AddSiteActivity extends AppCompatActivity implements AdapterView.On
     Button save_btn, cancel_btn, btn_add_cat;
     float lat, lng;
     String selectedCategorie;
-    DatabaseHelper db;
+
+    CategorieService categorieService;
     AddSiteButtonListener addButtonListener;
     FormValidationWatcher formValidationWatcher;
     CancelButtonListener cancelButtonListener;
@@ -71,8 +69,7 @@ public class AddSiteActivity extends AppCompatActivity implements AdapterView.On
      * This method is used to initialize all the variables before use.
      */
     public void initializer(){
-
-        db= new DatabaseHelper(this);
+        categorieService = CategorieService.getInstance(this);
         addButtonListener = new AddSiteButtonListener(this);
         txt_lat= findViewById(R.id.txt_lat);
         txt_lng= findViewById(R.id.txt_lng);
@@ -86,7 +83,7 @@ public class AddSiteActivity extends AppCompatActivity implements AdapterView.On
         categorie_spinner.setOnItemSelectedListener(this);
 
         ArrayList<String> categories = new ArrayList<String>();
-        List<Categorie> c= Objects.requireNonNull(db.getAllCategories());
+        List<Categorie> c= Objects.requireNonNull(categorieService.findAll());
         for (Categorie categorie : c) {
             categories.add(categorie.getNom());
         }
@@ -102,7 +99,7 @@ public class AddSiteActivity extends AppCompatActivity implements AdapterView.On
         // set Categorie value in the spinner
         if(i.hasExtra("site_categorie")) {
 
-            String cat = db.getCategorie(Integer.parseInt(i.getStringExtra("site_categorie"))).getNom();
+            String cat = categorieService.findById(Long.parseLong(i.getStringExtra("site_categorie"))).getNom();
             categorie_spinner.setSelection(categories.indexOf(cat));
         }
          lat = (float)round(e1,4);
