@@ -111,7 +111,7 @@ public class MapListener implements  GoogleMap.OnMarkerClickListener, GoogleMap.
      */
     @Override
     public boolean onMyLocationButtonClick() {
-        //activity.getLocation(binding.getRoot());
+        activity.getLocation(binding.getRoot());
         activity.getDisplayedSites( activity.getLastSelectedRadius(), activity.getLastSelectedCategorie(),activity.getcurrentPosition());
         return false;
     }

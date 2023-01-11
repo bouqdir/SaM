@@ -20,13 +20,11 @@ public class SiteViewAdapter extends RecyclerView.Adapter<SiteViewAdapter.ViewHo
     Context context;
     List<Site> siteList;
     OnSiteViewListener onSiteViewListener;
-    DatabaseHelper dbHelper; // to use in case of update or delete
 
     public SiteViewAdapter(Context context, List<Site> siteList,OnSiteViewListener onSiteViewListener) {
         this.context = context;
         this.siteList = siteList;
         this.onSiteViewListener=onSiteViewListener;
-        dbHelper= new DatabaseHelper(context);
     }
 
     @NonNull
@@ -64,31 +62,26 @@ public class SiteViewAdapter extends RecyclerView.Adapter<SiteViewAdapter.ViewHo
             nameView = itemView.findViewById(R.id.site_nom);
             resumeView = itemView.findViewById(R.id.site_resume);
             imageView = itemView.findViewById(R.id.imageview);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(onSiteViewListener!=null){
-                        int pos = getAdapterPosition();
 
-                        if(pos != RecyclerView.NO_POSITION){
-                            onSiteViewListener.OnSiteSelected(pos);
-                        }
+            itemView.setOnClickListener(view -> {
+                if(onSiteViewListener!=null){
+                    int pos = getAdapterPosition();
+
+                    if(pos != RecyclerView.NO_POSITION){
+                        onSiteViewListener.OnSiteSelected(pos);
                     }
                 }
             });
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    if(onSiteViewListener!=null){
-                        int pos = getAdapterPosition();
+            itemView.setOnLongClickListener(view -> {
+                if(onSiteViewListener!=null){
+                    int pos = getAdapterPosition();
 
-                        if(pos != RecyclerView.NO_POSITION){
-                            onSiteViewListener.OnSiteLongClick(pos);
-                        }
+                    if(pos != RecyclerView.NO_POSITION){
+                        onSiteViewListener.OnSiteLongClick(pos);
                     }
-                    return false;
                 }
+                return false;
             });
         }
 
