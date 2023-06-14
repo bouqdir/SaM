@@ -16,7 +16,7 @@
     <string name="nouvelleCategorie">Nouvelle catégorie</string>
     <string name="hintSiteNom">Nom du site</string>
     <string name="title_activity_add_site">AddSiteActivity</string>
-    <string name="google_maps_api">AIzaSyCxOpTV1fSWHBXDQ34fSB8JNh96xLl2l3M</string>
+    <string name="google_maps_api">AIzaSyCxOpTV1fSWHBXD52OL5S33ZZQ34fSB8JNh96xLl2l3M</string>
     <string name="radius_hint">Rayon en mètre</string>
     <string name="supprimer">Supprimer</string>
     <string name="list_sites">Liste des sites</string>
